@@ -1,0 +1,19 @@
+.media{
+    display: flex;
+    flex-direction: column;
+    
+}
+.row{
+    display: flex;  
+    flex-direction: column;
+    /* background-color: mediumvioletred; */
+    margin-top: 35px;
+
+}
+.row-header{
+    /* background-color: darkblue; */
+    display: flex;
+}
+img{
+    margin-right: 8px;
+}
