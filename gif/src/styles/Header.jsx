@@ -1,37 +1,78 @@
- import React from "react";
+ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GlobalStyle from "../styles/GlobalStyle"
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import {Link} from 'react-scroll'
+import {Trending} from './Media'
+import {Artists} from './Media'
+import {Clips} from './Media'
+import { Random } from "../API/Giphy";
+// import {Trending} from './Media'
  const Header=()=>
  {
+  const [click,setclick]=useState(false)
+  const closeMenu=()=> 
+  {setclick(false)
+  }
+  // const randomize = (content) =>{
+  //   return content.data.sort(()=>Math.random()-0.5)
+  // };
+  const [random,setrandom] =useState([])
+  const cric=async ()=>{
+    try{
+      const response=await fetch('https://api.giphy.com/v1/gifs/random?api_key=JrS6xDKq1NVKCTO6jEG4W9P88j2TFXti');
+       const res=await response.json();
+    setrandom(res.data);
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    cric()
+    
+ },[])
+
+ console.log(random.title)
     return(
         <>
         <GlobalStyle/>
+                <div className="pending-website" style={{display:"flex",justifyContent:"center",background:"purple"}}>
+                    <h1 >This Webapp is in progress it will update soon</h1>
+                </div>
             <div className="header" style={headstyle}>
                     <img src="../images/giphyLogo.png" alt="logo" style={image}/>
                 <Menu className="menu" >
                     <ButtonWrapper className="reaction">
-                    <MenuButton className="hover-reaction"><h2>Reactions</h2></MenuButton></ButtonWrapper>
-                    <ButtonWrapper className="entertainment">
-                    <MenuButton className="hover-entertainment"><h2>Entertainment</h2></MenuButton></ButtonWrapper>
-                    <ButtonWrapper className="sports">
-                    <MenuButton className="hover-sports"><h2>Sports</h2></MenuButton></ButtonWrapper>
-                    <ButtonWrapper className="stickers">
-                    <MenuButton className="hover-stickers"><h2>Stickers</h2></MenuButton></ButtonWrapper>
-                    <ButtonWrapper className="artists">
-                    <MenuButton className="hover-artists"><h2>Artists</h2></MenuButton></ButtonWrapper>
-                    <ButtonWrapper className="icons">
-                    <MenuButton className="hover-icons">
-                    <MoreVertIcon/>
+                    <MenuButton className="hover-reaction">
+                    <Link  to="Trending" spy={true} smooth={true} offset={-100} duration={500} onClick={closeMenu}><h2>Trending</h2></Link>
                     </MenuButton></ButtonWrapper>
+                    <ButtonWrapper className="entertainment">
+                    <MenuButton className="hover-entertainment">
+                    <Link  to="Artists" spy={true} smooth={true} offset={-100} duration={500} onClick={closeMenu}><h2>Artists</h2></Link>
+                    </MenuButton></ButtonWrapper>
+                    <ButtonWrapper className="sports">
+                    <MenuButton className="hover-sports">
+                    <Link  to="Clips" spy={true} smooth={true} offset={-100} duration={500} onClick={closeMenu}><h2>Clips</h2></Link>
+                    </MenuButton></ButtonWrapper>
+                    <ButtonWrapper className="stickers">
+                    <MenuButton className="hover-stickers">
+                    <Link  to="Stories" spy={true} smooth={true} offset={-100} duration={500} onClick={closeMenu}><h2>Stories</h2></Link>
+                    </MenuButton></ButtonWrapper>
+                  
+                    
                 </Menu>
-                    <Button>
-                        <h2>Upload</h2>
-                    </Button>
-                    <Button>
-                        <h2>Create</h2>
-                    </Button>
+                    <Random1>
+                        <h2>Like</h2>
+                    </Random1>
+                    <Random2 onClick={cric}>
+                        
+                        <h2>Random</h2>
+                        
+                    </Random2>
                     <Avatar>
                         <img src="../images/avatar.png" alt="photo"/>
                         <h2>Parth</h2>
@@ -52,7 +93,7 @@ const headstyle={
     cursor:"pointer"
 }
 const image={
-    width:"100px",
+    width:"150px",
 }
 const Menu = styled.div`
 ${'' /* background-color:purple; */}
@@ -66,20 +107,36 @@ border-radius:5px;
 padding:5px;
 
 `
-
-const Button=styled.div`
+const Random1=styled.div`
     ${'' /* position:relative */}
 
     background-color:#6d63ff;
-    width:75px;
-    height:35px;
+    width:105px;
+    height:45px;
     display:flex;
     justify-content:center;
     align-items:center;
     ${'' /* flex:.5; */}
-    margin-right:3px;
-    margin-left:3px;
+    margin-right:15px;
+    margin-left:15px;
     border-radius:5px;
+    ${'' /* padding:2px; */}
+`
+
+const Random2=styled.div`
+    ${'' /* position:relative */}
+
+    background-color:#6d63ff;
+    width:105px;
+    height:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    ${'' /* flex:.5; */}
+    margin-right:15px;
+    margin-left:15px;
+    border-radius:5px;
+    ${'' /* padding:2px; */}
 `
 const Avatar = styled.div`
   height: 50px;
@@ -107,7 +164,7 @@ const Avatar = styled.div`
     display:flex;
     ${'' /* align items vetically kaam krta so jo bhi letter hai upr ki trf shif hogye hai teal colour ke */}
     align-items:flex-start;
-    margin-right:10px;
+    margin-left:50px;
     ${'' /* justify-content:space-between; */}
 
 

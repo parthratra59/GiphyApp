@@ -1,0 +1,8 @@
+.trending-items img{
+    height: 100%;
+    /* show 100% of the whole image */
+    border-radius: 2px;
+}
+.trending-items{
+    margin-right: -4px;
+}

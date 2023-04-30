@@ -17,3 +17,18 @@
 img{
     margin-right: 8px;
 }
+.trending-container{
+    /* background-color: yellow; */
+    display: flex;
+    height: 150px;
+    /* agr overflow nhi krta toh bdta jarha tha horizontally toh usko screen mai fir krne ke liye kra */
+    /* overflow: hidden; */
+    overflow: hidden;
+}
+
+.artist-container{
+    display: flex;
+    overflow: hidden;
+    height: 230px;;
+    
+}

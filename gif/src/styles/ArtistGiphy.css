@@ -1,0 +1,8 @@
+.artistphoto img{
+    height: 100%;
+    /* show 100% of the whole image */
+    border-radius: 2px;
+}
+.artistphoto{
+    margin-right: -4px;
+}
