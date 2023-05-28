@@ -6,7 +6,9 @@ const Artists =[
     "Pusheen",
     "TRIPPIESTEFF",
     "virat+kohli",
-    "ShahRukh+Khan"
+    "ShahRukh+Khan",
+    
+
 ]
 
 export default Artists

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import "./Media.css"
-import {Giphy, fetchSearchGiphys} from '../API/Giphy';
+import {Trendgiphing, fetchSearchGiphys} from '../API/Giphy';
 import TrendingGiphy from './TrendingGiphy';
 import Artists from '../Artists';
 import ArtistGiphy from './ArtistGiphy';
-import Clips from './Clips';
+// import Clips from './Clips';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import ClipsGiphySection from './ClipsGiphySection';
+import { StoriesSection } from './StoriesSection';
 // import axios from 'axios'
 // import fetchtrendingdiphys from '../api/Giphyapi'
 // import Giphyapi from '../api/Giphyapi'
@@ -18,22 +19,22 @@ const Media = () => {
   const [trending,settrending] =useState([])
   const [hiartist,setArtists] =useState([])
   const [clips,setClips]=useState([])
+  const [stories,setstories]=useState([])
   // random  data ke  liye hr baar
   const randomizeData = (content) =>{
     return content.data.sort(()=>Math.random()-0.5)
   };
 
   // axios mai jaise kiya tha na easy method mai vese kr rhe
-  const gettrendinfgiphys = async()=>{
-    // almost same code hai axios vali file mai tha tutorial
-    try{
-    const trending =await Giphy();
-    settrending(randomizeData(trending.data));
+  const gettrendinfgiphys = async () => {
+    try {
+      const trendingList = await Promise.all([Trendgiphing()]);
+      const trending = trendingList[0];
+      settrending(randomizeData(trending.data));
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-      console.log(error)
-    }
-  }
+  };
 
   const getArtistsGiphys = async () => {
     try {
@@ -55,10 +56,38 @@ const Media = () => {
     }
   }
 
-  const getclips=async()=>{
+  // dekh artist mai hmne alg se component bnaya the us mai se value agyi gif agyi thi 
+
+  // but clips mai hmne alg se nhi bnaya clips ka component isliye hmne query bhjni pdegi coffee==query(kuch bhi hoskta) vese bhi kr skte jese artist ne alg component bnakr kiya gyi function mai and setclips update kro phhele empty 
+  // array tha  
+
+  // const getRandomQuery = () => {
+  //   // Generate an array of random words or phrases
+  //   const queries = ['coffee', 'cat', 'dog', 'nature', 'funny'];
+  //   // Choose a random query from the array
+  //   const randomQuery = queries[Math.floor(Math.random() * queries.length)];
+  //   return randomQuery;
+  // };
+
+  const getclips=async(query,setClips)=>{
     try{
-      const getclips = await fetchSearchGiphys();
-      setClips(randomizeData(getclips));
+      
+      const getclips = await fetchSearchGiphys(query)
+      setClips(randomizeData(getclips.data));
+      
+    }
+    catch(error){
+      console.log('error is showing')
+    }
+  }
+
+
+  const getSearchstories=async(query,setstories)=>{
+    try{
+      
+      const getclips = await fetchSearchGiphys(query)
+      setstories(randomizeData(getclips.data));
+      
     }
     catch(error){
       console.log('error is showing')
@@ -68,13 +97,20 @@ const Media = () => {
  useEffect(()=>{
     gettrendinfgiphys();
     getArtistsGiphys();
-    getclips();
+    const queries = ['nature', 'funny','doraemon'];
+  
+    const randomQuery = queries[Math.floor(Math.random() * queries.length)]
+    getclips(randomQuery,setClips);
+
+    getSearchstories('pose',setstories);
  },[])
+ 
+
 
 // console.log(trending,'what is in trending');
 
 //  console.log(hiartist,"what is this artists")
-// console.log(clips,"what are the clips")
+console.log(stories,"what are the stories")
 // const settings = {
 //   dots: true,
 //   infinite: true,
@@ -139,9 +175,7 @@ const Media = () => {
             <h1>Clips</h1>
             </div>
             <div className='clips-container'  id='Clips'>
-              {clips.map((i_m_good,index)=>{
-                return <Clips giphy={i_m_good} key={index}/>
-              })}
+             <ClipsGiphySection giphyArray ={clips}/>
             </div>
         </div>
         <div className='row'>
@@ -149,8 +183,8 @@ const Media = () => {
             <img src="/images/stories.svg" alt='stories'  />
             <h1>Stories</h1>
             </div>
-            <div className='trending-container' id='Stories'>
-              <p>Content</p>
+            <div className='stories-container' id='Stories'>
+              <StoriesSection  giphyArray={stories}/>
             </div>
         </div>
         

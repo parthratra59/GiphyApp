@@ -1,0 +1,44 @@
+.clips_grid{
+    display: grid;
+    /* fr fraction 3hisaa 4 mai se left side and 1/4 fraction left side 4*25%=100% */
+    grid-template-columns: 3fr 1fr;
+    gap:10px;
+}
+.first_column{
+    /* background-color: orange; */
+    height:380px;
+    width:750px;
+}
+.first_column img{
+    height: 100%;
+    width:100%;
+    border-radius: 4px;
+}
+.second_column{
+    /* background-color: purple; */
+    width:600px;
+    height: 400px;
+    /* margin: 10px;; */
+}
+
+.second_column img{
+    width:400px;
+    height:180px;
+    object-fit: cover;
+    border-radius: 4px; 
+
+}
+.text-title{
+    display: flex;
+    /* background-color: blue; */
+    align-items: center;
+    height: 50px;
+    margin-bottom: 10px;
+  
+   
+}
+.text-title img{
+    width: 20px;
+    height: 30px;
+    margin-right: 10px;
+}
